@@ -5,6 +5,7 @@ import { WORDS } from '../../data';
 import GuessInput from '../GuessInput';
 import Guesses from '../Guesses/Guesses';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import { checkGuess } from '../../game-helpers';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -13,6 +14,7 @@ console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = useState([]);
+  const checkedGuesses = guesses.map(({ guess, ...rest }) => ({ ...rest, guess, checked: checkGuess(guess, answer) }))
   function addGuess(guess) {
     if (guesses.length >= NUM_OF_GUESSES_ALLOWED) {
       alert(`Only ${NUM_OF_GUESSES_ALLOWED} guesses allowed...`)
@@ -21,8 +23,9 @@ function Game() {
     const newGuess = { guess, id: crypto.randomUUID() };
     setGuesses(guesses => [...guesses, newGuess]);
   }
+
   return <>
-    <Guesses guesses={guesses} />
+    <Guesses guesses={checkedGuesses} />
     <GuessInput addGuess={addGuess} />
   </>;
 }

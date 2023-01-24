@@ -6,7 +6,7 @@ import Guess from "../Guess";
 function Guesses({ guesses }) {
   return <div className="guess-results">
     {range(NUM_OF_GUESSES_ALLOWED).map((index) =>
-      <Guess guess={guesses[index]?.guess || ''} key={index} />
+      <Guess guess={guesses[index] || []} key={index} />
     )}
   </div>;
 }
