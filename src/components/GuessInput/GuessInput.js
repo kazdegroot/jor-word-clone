@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function GuessInput({ addGuess }) {
+function GuessInput({ addGuess, disabled = false }) {
   const [guess, setGuess] = useState('');
   function onSubmit(e) {
     e.preventDefault();
@@ -18,6 +18,8 @@ function GuessInput({ addGuess }) {
     <input
       id="guess-input"
       type="text"
+      disabled={disabled}
+      aria-disabled={disabled}
       value={guess}
       onChange={e => setGuess(e.target.value.toUpperCase())}
       minLength={5}
