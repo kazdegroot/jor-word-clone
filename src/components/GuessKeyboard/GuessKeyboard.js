@@ -13,7 +13,6 @@ function guessesToLetterStatus(guesses) {
 
 function GuessKeyboard({ guesses }) {
   const letters = guessesToLetterStatus(guesses);
-  console.log(letters);
   return <div className="keyboard">
     {KEYBOARD.map((row, index) => <div className="row" key={index}>{row.split('').map((letter, index) => <span key={index} className={`key ${letters[letter] ?? ''}`}>{letter}</span>)}</div>)}
   </div>;
