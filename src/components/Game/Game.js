@@ -4,7 +4,7 @@ import { sample } from '../../utils';
 import { WORDS } from '../../data';
 import GuessInput from '../GuessInput';
 import Guesses from '../Guesses';
-import GameResult from '../GameResult';
+import GuessKeyboard from '../GuessKeyboard';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { checkGuess } from '../../game-helpers';
 
@@ -54,6 +54,7 @@ function Game() {
   return <>
     <Guesses guesses={checkedGuesses} />
     <GuessInput addGuess={addGuess} disabled={status !== 'running'} />
+    <GuessKeyboard guesses={checkedGuesses} />
     {status === 'won' && <WonBanner nrOfGuesses={guesses.length} />}
     {status === 'lost' && <LostBanner answer={answer} />}
   </>;
