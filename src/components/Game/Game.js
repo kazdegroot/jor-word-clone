@@ -8,11 +8,6 @@ import GuessKeyboard from '../GuessKeyboard';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { checkGuess } from '../../game-helpers';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function WonBanner({ nrOfGuesses }) {
   return <div className="happy banner">
     <p>
@@ -28,10 +23,22 @@ function LostBanner({ answer }) {
   </div>;
 }
 
+function getWord() {
+  const answer = sample(WORDS);
+  console.log({ answer });
+  return answer;
+}
+
 function Game() {
+  const [answer, setAnswer] = useState(getWord);
   const [guesses, setGuesses] = useState([]);
   const [status, setStatus] = useState('running');
 
+  function resetGame() {
+    setAnswer(getWord);
+    setGuesses([]);
+    setStatus('running');
+  }
 
   const checkedGuesses = guesses.map(({ guess, ...rest }) => ({ ...rest, guess, checked: checkGuess(guess, answer) }))
   function addGuess(guess) {
@@ -52,6 +59,7 @@ function Game() {
   }
 
   return <>
+    <button type="button" onClick={resetGame}>Reset the game!!</button>
     <Guesses guesses={checkedGuesses} />
     <GuessInput addGuess={addGuess} disabled={status !== 'running'} />
     <GuessKeyboard guesses={checkedGuesses} />
